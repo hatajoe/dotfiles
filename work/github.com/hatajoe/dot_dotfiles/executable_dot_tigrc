@@ -1,0 +1,6 @@
+set main-view = id date author commit-title:graph=yes,refs=yes
+set vertical-split = no
+
+bind generic <Ctrl-f> scroll-page-down
+bind generic <Ctrl-b> scroll-page-up
+bind generic P @sh -c 'hub browse -- commit/%(commit)'
