@@ -2,6 +2,7 @@ set nocompatible
 
 call plug#begin('~/.vim/plugged')
 
+Plug 'sheerun/vim-polyglot'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'bronson/vim-trailing-whitespace'
@@ -12,7 +13,7 @@ Plug 'mattn/vim-goimports'
 
 call plug#end()
 
-syntax off
+syntax on
 set visualbell t_vb=
 
 "" let g:lsp_log_verbose = 1
