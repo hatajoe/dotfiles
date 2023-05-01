@@ -20,18 +20,6 @@ set visualbell t_vb=
 "" let g:lsp_log_file = expand('~/vim-lsp.log')
 let g:lsp_document_code_action_signs_enabled = 0
 
-if system('uname -a | grep microsoft') != ''
-  autocmd TextYankPost * call system('win32yank.exe -i --crlf', @")
-
-  function! Paste(mode)
-	let @" = system('win32yank.exe -o --lf')
-	return a:mode
-  endfunction
-
-  map <expr> p Paste('p')
-  map <expr> P Paste('P')
-endif
-
 autocmd BufWritePre * :FixWhitespace
 
 "" set vim variables """"""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -50,7 +38,7 @@ set ignorecase
 set smartcase
 
 set laststatus=2
-set clipboard=unnamed
+set clipboard=unnamedplus
 set omnifunc=lsp#complete
 
 set statusline=%F%m\ %=%l:%v\ %{&ff}

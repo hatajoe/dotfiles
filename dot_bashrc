@@ -113,7 +113,7 @@ if ! shopt -oq posix; then
 fi
 
 if [ -d /etc/bash_completion.d ]; then
-    . /etc/bash_completion.d/*
+     for f in /etc/bash_completion.d/*; do . $f; done
 fi
 
 if [ -f "$HOME/.asdf/completions/asdf.bash" ]; then
