@@ -12,34 +12,38 @@
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
+        . "$HOME/.bashrc"
     fi
 fi
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
+PROMPT_COMMAND='__git_ps1 "\[\033[01;34m\]\w" "\n\[\033[00m\]\D{%H:%M:%S} \[\033[01;32m\]%\[\033[00m\] "'
+
+if [[ -z $TMUX ]]; then
+    # set PATH so it includes user's private bin if it exists
+    if [ -d "$HOME/bin" ] ; then
+        PATH="$HOME/bin:$PATH"
+    fi
+
+    # set PATH so it includes user's private bin if it exists
+    if [ -d "$HOME/.local/bin" ] ; then
+        PATH="$HOME/.local/bin:$PATH"
+    fi
+
+    if [ -d "/usr/local/go" ] ; then
+        PATH="/usr/local/go/bin:$PATH"
+    fi
+
+    if [ -d "$HOME/go" ] ; then
+       PATH="$HOME/go/bin:$PATH"
+    fi
 fi
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-
-if [ -d "$HOME/go" ] ; then
-   PATH="$HOME/go/bin:$PATH"
-fi
-
-if [ -d "/usr/local/go" ] ; then
-    PATH="/usr/local/go/bin:$PATH"
-fi
-
-if command -v socat > /dev/null 2>&1; then
+if command -v socat > /dev/null 2>&1 && command -v npiperelay.exe > /dev/null 2>&1; then
     export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
     (
         set -eu
         piperelay=(setsid socat "UNIX-LISTEN:$SSH_AUTH_SOCK,fork" "EXEC:npiperelay.exe -ei -s //./pipe/openssh-ssh-agent,nofork")
-        if ! pgrep "-fxU$UID" "${piperelay[*]}" >/dev/null; then
+        if ! pgrep "-fxU$UID" "${piperelay[*]:1}" >/dev/null; then
             rm -f "$SSH_AUTH_SOCK"
             ("${piperelay[@]}" &) >/dev/null
         fi
@@ -49,13 +53,5 @@ fi
 if command -v fzf > /dev/null 2>&1; then
     if [ -f "$HOME/.fzf.bash" ]; then
         source $HOME/.fzf.bash
-    fi
-
-    if command -v ghq > /dev/null 2>&1; then
-        __gcd__() {
-            repo=`ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/README.*"`
-            cd "$(ghq root)/$repo"
-        }
-        bind '"\C-]": "\C-ex\C-u __gcd__\C-m\C-y\C-b\C-d"'
     fi
 fi

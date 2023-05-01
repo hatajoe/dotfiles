@@ -112,4 +112,28 @@ if ! shopt -oq posix; then
   fi
 fi
 
+if [ -d /etc/bash_completion.d ]; then
+  . /etc/bash_completion.d/*
+fi
+
 bind 'set bell-style none'
+
+if command -v fzf > /dev/null 2>&1 && command -v ghq > /dev/null 2>&1; then
+    __gcd__() {
+        repo=`ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/README.*"`
+        if [ -n "$repo" ]; then
+            cd "$(ghq root)/$repo"
+        fi
+    }
+    bind '"\C-]": "\C-ex\C-u __gcd__\C-m\C-y\C-b\C-d"'
+fi
+
+if command -v saml2aws > /dev/null 2>&1 && command -v aws > /dev/null 2>&1; then
+    awslogin() {
+        saml2aws login -a "$1" && export AWS_PROFILE="$1"
+    }
+
+    awsconsole() {
+        awslogin "$1" && export AWS_PROFILE="$1" && saml2aws console -a "$1"
+    }
+fi
