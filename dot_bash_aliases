@@ -1,4 +1,5 @@
 alias v=vim
 alias g=git
+alias t=tig
 alias k=kubectl
-alias t=terraform
+alias tf=terraform
