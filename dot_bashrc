@@ -121,6 +121,10 @@ if [ -f "$HOME/.asdf/completions/asdf.bash" ]; then
 fi
 
 bind 'set bell-style none'
+# If there are multiple matches for completion, Tab should cycle through them
+bind 'TAB:menu-complete'
+# And Shift-Tab should cycle backwards
+bind '"\e[Z": menu-complete-backward'
 
 if command -v fzf > /dev/null 2>&1 && command -v ghq > /dev/null 2>&1; then
     __gcd__() {
