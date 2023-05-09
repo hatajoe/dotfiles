@@ -112,20 +112,28 @@ if ! shopt -oq posix; then
     fi
 fi
 
+if [ -f /usr/share/bash-completion/completions/git ]; then
+    . /usr/share/bash-completion/completions/git
+fi
+
 if [ -d /etc/bash_completion.d ]; then
-     for f in /etc/bash_completion.d/*; do . $f; done
-     __git_complete g __git_main
+    for f in /etc/bash_completion.d/*; do . $f; done
+    # __git_complete g __git_main
 fi
 
 if [ -f "$HOME/.asdf/completions/asdf.bash" ]; then
     . "$HOME/.asdf/completions/asdf.bash"
 fi
 
+if [ -f "$(ghq root)/github.com/junegunn/fzf/shell/key-bindings.bash" ]; then
+    . "$(ghq root)/github.com/junegunn/fzf/shell/key-bindings.bash"
+fi
+if [ -f "$(ghq root)/github.com/lincheney/fzf-tab-completion/bash/fzf-bash-completion.sh" ]; then
+    . "$(ghq root)/github.com/lincheney/fzf-tab-completion/bash/fzf-bash-completion.sh"
+    bind -x '"\t": fzf_bash_completion'
+fi
+
 bind 'set bell-style none'
-# If there are multiple matches for completion, Tab should cycle through them
-bind 'TAB:menu-complete'
-# And Shift-Tab should cycle backwards
-bind '"\e[Z": menu-complete-backward'
 
 if command -v fzf > /dev/null 2>&1 && command -v ghq > /dev/null 2>&1; then
     __gcd__() {
