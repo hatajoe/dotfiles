@@ -118,7 +118,7 @@ fi
 
 if [ -d /etc/bash_completion.d ]; then
     for f in /etc/bash_completion.d/*; do . $f; done
-    # __git_complete g __git_main
+    __git_complete g __git_main
 fi
 
 if [ -f "$HOME/.asdf/completions/asdf.bash" ]; then
