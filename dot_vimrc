@@ -13,7 +13,7 @@ Plug 'mattn/vim-goimports'
 
 call plug#end()
 
-syntax on
+syntax off
 set visualbell t_vb=
 
 "" let g:lsp_log_verbose = 1
@@ -50,8 +50,6 @@ let mapleader = "\,"
 nnoremap <silent> <Leader>v :edit $HOME/.vimrc<CR>
 nnoremap <Leader>re :source $HOME/.vimrc<CR>
 nnoremap <Leader>gh :!gh browse %<CR><CR>
-nnoremap <Leader>ts :!tig show %<CR><CR>
-nnoremap <Leader>tb :!tig blame %<CR><CR>
 
 nnoremap <silent> <c-p> :Files<CR>
 nnoremap <silent> <c-h> :History<CR>
