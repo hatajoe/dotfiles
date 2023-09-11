@@ -14,6 +14,7 @@ Plug 'mattn/vim-goimports'
 call plug#end()
 
 syntax off
+set t_Co=0
 set visualbell t_vb=
 
 "" let g:lsp_log_verbose = 1
