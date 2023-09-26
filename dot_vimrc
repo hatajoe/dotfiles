@@ -19,9 +19,20 @@ set visualbell t_vb=
 
 "" let g:lsp_log_verbose = 1
 "" let g:lsp_log_file = expand('~/vim-lsp.log')
+
 let g:lsp_diagnostics_virtual_text_enabled = 0
 let g:lsp_document_code_action_signs_enabled = 0
 let g:lsp_diagnostics_float_cursor = 1
+
+augroup vim_lsp_golangci_lint_langserver
+  au!
+  autocmd User lsp_setup call lsp#register_server({
+      \ 'name': 'golangci-lint-langserver',
+      \ 'cmd': {server_info->['golangci-lint-langserver']},
+      \ 'initialization_options': {'command': ['golangci-lint', 'run', '--disable', 'lll', '--out-format', 'json', '--issues-exit-code=1']},
+      \ 'whitelist': ['go'],
+      \ })
+augroup END
 
 autocmd BufWritePre * :FixWhitespace
 
