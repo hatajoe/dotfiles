@@ -10,6 +10,7 @@ Plug 'tpope/vim-surround'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 Plug 'mattn/vim-goimports'
+Plug 'github/copilot.vim'
 
 call plug#end()
 
@@ -53,7 +54,6 @@ set smartcase
 
 set laststatus=2
 set clipboard=unnamedplus
-set clipboard+=unnamed "" for Mac
 set omnifunc=lsp#complete
 
 set statusline=%F%m\ %=%l:%v\ %{&ff}
