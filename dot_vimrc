@@ -2,7 +2,6 @@ set nocompatible
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'sheerun/vim-polyglot'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'bronson/vim-trailing-whitespace'
@@ -13,13 +12,6 @@ Plug 'mattn/vim-goimports'
 Plug 'github/copilot.vim'
 
 call plug#end()
-
-syntax off
-set t_Co=0
-set visualbell t_vb=
-
-"" let g:lsp_log_verbose = 1
-"" let g:lsp_log_file = expand('~/vim-lsp.log')
 
 let g:lsp_diagnostics_virtual_text_enabled = 0
 let g:lsp_document_code_action_signs_enabled = 0
@@ -38,7 +30,9 @@ augroup END
 autocmd BufWritePre * :FixWhitespace
 
 "" set vim variables """"""""""""""""""""""""""""""""""""""""""""""""""""""
+syntax off
 
+set visualbell t_vb=
 set viminfo+=n~/.vim/viminfo.txt
 set directory=~/.vim/directory
 set backupdir=~/.vim/backupdir
