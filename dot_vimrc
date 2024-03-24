@@ -57,7 +57,7 @@ set statusline=%F%m\ %=%l:%v\ %{&ff}
 let mapleader = "\,"
 nnoremap <silent> <Leader>v :edit $HOME/.vimrc<CR>
 nnoremap <Leader>re :source $HOME/.vimrc<CR>
-nnoremap <Leader>gh :!gh browse %<CR><CR>
+nnoremap <Leader>gh :!gh browse $(git ls-files --full-name %)<CR><CR>
 
 nnoremap <silent> <c-p> :Files<CR>
 nnoremap <silent> <c-h> :History<CR>
