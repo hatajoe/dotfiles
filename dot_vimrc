@@ -75,3 +75,6 @@ nnoremap <silent> <Leader>f :LspDocumentFormat<CR>
 nnoremap <silent> <Leader>l :LspDocumentDiagnostics<CR>
 nnoremap <silent> <Leader>n :LspNextError<CR>
 nnoremap <silent> <Leader>p :LspPreviousError<CR>
+
+imap <C-N> <Plug>(copilot-next)
+imap <C-P> <Plug>(copilot-previous)
