@@ -2,6 +2,7 @@ set nocompatible
 
 call plug#begin('~/.vim/plugged')
 
+Plug 'tpope/vim-sleuth'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'bronson/vim-trailing-whitespace'
@@ -45,6 +46,7 @@ set incsearch
 set hlsearch
 set ignorecase
 set smartcase
+set smartindent
 
 set laststatus=2
 set clipboard=unnamedplus
