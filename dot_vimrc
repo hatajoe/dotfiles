@@ -2,6 +2,7 @@ set nocompatible
 
 call plug#begin('~/.vim/plugged')
 
+Plug 'altercation/vim-colors-solarized'
 Plug 'tpope/vim-sleuth'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
@@ -31,7 +32,9 @@ augroup END
 autocmd BufWritePre * :FixWhitespace
 
 "" set vim variables """"""""""""""""""""""""""""""""""""""""""""""""""""""
-syntax off
+syntax enable
+set background=dark
+colorscheme solarized
 
 set visualbell t_vb=
 set viminfo+=n~/.vim/viminfo.txt
