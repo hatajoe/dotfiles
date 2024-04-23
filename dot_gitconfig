@@ -5,16 +5,17 @@
 	ignorecase = false
 	quotepath = false
 	preloadindex = true
-	editor = vim -c \"set fenc=utf-8\"
+	editor = /usr/bin/vim
+	excludesfile = /home/hatajoe/.gitignore
 [alias]
-	cm = commit
+	cm = commit -v
 	co = checkout
 	rb = rebase
 	pl = !git fetch --prune && git pull && git delete-merged-branches
 	fe = !git fetch --prune && git delete-merged-branches
 	ps = push
 	br = branch
-	ac = !git add -A && git commit
+	ac = !git add -A && git commit -v
 	delete-merged-branches = !git branch --merged | grep -vE '^\\*|main$|master$|develop$|deploy-.*$' | xargs -I % git branch -d %
 [push]
 	default = simple
@@ -38,8 +39,8 @@
 [include]
 	path = ~/.gitconfig.secret
 [credential "https://github.com"]
-	helper = 
+	helper =
 	helper = !/usr/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = 
+	helper =
 	helper = !/usr/bin/gh auth git-credential
