@@ -2,7 +2,7 @@ set nocompatible
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'tpope/vim-sleuth'
+Plug 'sheerun/vim-polyglot'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'bronson/vim-trailing-whitespace'
@@ -12,6 +12,7 @@ Plug 'mattn/vim-lsp-settings'
 Plug 'mattn/vim-goimports'
 Plug 'github/copilot.vim'
 Plug 'iberianpig/tig-explorer.vim'
+Plug 'lifepillar/vim-solarized8'
 
 call plug#end()
 
@@ -30,7 +31,9 @@ let g:copilot_filetypes = { 'gitcommit': v:true }
 autocmd BufWritePre * :FixWhitespace
 
 "" set vim variables """"""""""""""""""""""""""""""""""""""""""""""""""""""
-syntax off
+syntax enable
+set background=dark
+colorscheme solarized8_flat
 
 set visualbell t_vb=
 set viminfo+=n~/.vim/viminfo.txt
@@ -66,7 +69,6 @@ nnoremap <silent> <c-k> :Buffers<CR>
 
 nnoremap <silent> <C-]> :LspDefinition<CR>
 nnoremap <silent> <C-\> :LspTypeDefinition<CR>
-nnoremap <silent> <C-i> :LspHover<CR>
 nnoremap <silent> <Leader>a :LspCodeAction<CR>
 nnoremap <silent> <Leader>e :LspRename<CR>
 nnoremap <silent> <Leader>r :LspReferences<CR>
@@ -75,6 +77,7 @@ nnoremap <silent> <Leader>f :LspDocumentFormat<CR>
 nnoremap <silent> <Leader>l :LspDocumentDiagnostics<CR>
 nnoremap <silent> <Leader>n :LspNextError<CR>
 nnoremap <silent> <Leader>p :LspPreviousError<CR>
+nnoremap <silent> <Leader>h :LspHover<CR>
 
 imap <C-N> <Plug>(copilot-next)
 imap <C-P> <Plug>(copilot-previous)
