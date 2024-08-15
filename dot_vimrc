@@ -27,6 +27,10 @@ let g:lsp_settings_filetype_go = ['gopls', 'golangci-lint-langserver']
 
 let g:copilot_filetypes = { 'gitcommit': v:true }
 
+let g:netrw_liststyle=3
+
+let $FZF_DEFAULT_OPTS="--preview-window 'up:70%' --bind ctrl-b:preview-page-up,ctrl-f:preview-page-down"
+
 "" autocmd
 autocmd BufWritePre * :FixWhitespace
 
