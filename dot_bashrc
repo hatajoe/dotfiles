@@ -130,6 +130,10 @@ if [ -f "$HOME/.asdf/completions/asdf.bash" ]; then
     . "$HOME/.asdf/completions/asdf.bash"
 fi
 
+if [ -f "$HOME/.asdf/shims/aws_completer" ]; then
+    complete -C "$HOME/.asdf/shims/aws_completer" aws
+fi
+
 bind 'set bell-style none'
 
 if command -v fzf > /dev/null 2>&1 && command -v ghq > /dev/null 2>&1; then
@@ -144,7 +148,7 @@ fi
 
 if command -v saml2aws > /dev/null 2>&1 && command -v aws > /dev/null 2>&1; then
     awslogin() {
-        SAML2AWS_IDP_PROVIDER=Browser saml2aws login -a "$1" && export AWS_PROFILE="$1"
+        saml2aws login -a "$1" && export AWS_PROFILE="$1"
     }
 
     awsconsole() {
