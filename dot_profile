@@ -52,7 +52,7 @@ parse_git_branch() {
 
 GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWUNTRACKEDFILES=true
-PROMPT_COMMAND='__git_ps1 "\e[1;36m\D{%H:%M:%S}\e[0;90m $(parse_git_branch)" "\n\e[0m% "'
+PROMPT_COMMAND='__git_ps1 "\e[1;36m\D{%H:%M:%S}\e[0;90m $(parse_git_branch)" "\e[0m\n% "'
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
