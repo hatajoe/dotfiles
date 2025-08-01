@@ -126,14 +126,6 @@ if [ -d /etc/bash_completion.d ]; then
     __git_complete g __git_main
 fi
 
-if [ -f "$HOME/.asdf/completions/asdf.bash" ]; then
-    . "$HOME/.asdf/completions/asdf.bash"
-fi
-
-if [ -f "$HOME/.asdf/shims/aws_completer" ]; then
-    complete -C "$HOME/.asdf/shims/aws_completer" aws
-fi
-
 bind 'set bell-style none'
 
 if command -v fzf > /dev/null 2>&1 && command -v ghq > /dev/null 2>&1; then
@@ -141,6 +133,9 @@ if command -v fzf > /dev/null 2>&1 && command -v ghq > /dev/null 2>&1; then
         repo=`ghq list | fzf --preview "bat --style=header,grid --line-range :80 $(ghq root)/{}/README.*"`
         if [ -n "$repo" ]; then
             cd "$(ghq root)/$repo"
+            tmux split-window -h -c "#{pane_current_path}"
+            tmux split-window -v -c "#{pane_current_path}"
+            tmux select-layout 'fd06,270x71,0,0{155x71,0,0[155x50,0,0,1,155x20,0,51,6],114x71,156,0,3}'
         fi
     }
     bind '"\C-]": "\C-ex\C-u __gcd__\C-m\C-y\C-b\C-d"'
@@ -156,3 +151,17 @@ if command -v saml2aws > /dev/null 2>&1 && command -v aws > /dev/null 2>&1; then
         awslogin "$1" && export AWS_PROFILE="$1" && saml2aws console -a "$1"
     }
 fi
+
+awsso() {
+    PROFILE=$(cat ~/.aws/config | grep profile | awk '{print $2}' | tr -d '\]' | fzf)
+    ACCOUNT=$(cat ~/.aws/config | grep -A 4 "\[profile ${PROFILE}\]" | grep "sso_account_id" | awk '{print $3}')
+    REGION=$(cat ~/.aws/config | grep -A 4 "\[profile ${PROFILE}\]" | grep "region" | awk '{print $3}')
+    aws sso login --profile "${PROFILE}"
+    export AWS_PROFILE="${PROFILE}"
+    if [ -n "${REGION}" ]; then
+        export AWS_REGION="${REGION}"
+    fi
+    export AWS_ACCOUNT="${ACCOUNT}"
+    export ENVIRONMENT=$(echo ${AWS_PROFILE#*-} | sed 's/-.*$//')
+    aws sts get-caller-identity
+}

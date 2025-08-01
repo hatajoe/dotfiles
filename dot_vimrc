@@ -13,8 +13,11 @@ Plug 'mattn/vim-lsp-settings'
 Plug 'mattn/vim-goimports'
 Plug 'github/copilot.vim'
 Plug 'lifepillar/vim-solarized8'
+Plug 'airblade/vim-gitgutter'
 
 call plug#end()
+
+let g:python3_host_prog = expand('~/.vim/python3/bin/python')
 
 "" let lsp_log_verbose=1
 "" let lsp_log_file = '/tmp/lsp.log'
@@ -23,6 +26,7 @@ let g:lsp_document_code_action_signs_enabled = 0
 let g:lsp_diagnostics_float_cursor = 1
 let g:lsp_settings_filetype_ruby = ['ruby-lsp', 'rubocop-lsp-mode']
 let g:lsp_settings_filetype_go = ['gopls', 'golangci-lint-langserver']
+let g:lsp_settings_filetype_vue = ['vtsls', 'volar-server']
 
 let g:copilot_filetypes = { 'gitcommit': v:true }
 
@@ -32,6 +36,11 @@ let g:netrw_preview=1
 let g:netrw_winsize=20
 
 let $FZF_DEFAULT_OPTS="--preview-window 'up:60%' --bind ctrl-u:preview-page-up,ctrl-d:preview-page-down"
+
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --line-number --no-heading '.shellescape(<q-args>), 0,
+  \   fzf#vim#with_preview({'options': '--delimiter : --nth 3..'}, 'up:60%'))
 
 "" autocmd
 autocmd BufWritePre * :FixWhitespace
@@ -73,6 +82,7 @@ nnoremap <Leader>gh :!gh browse $(git ls-files --full-name %)<CR><CR>
 nnoremap <silent> <C-p> :Files<CR>
 nnoremap <silent> <C-h> :History<CR>
 nnoremap <silent> <C-k> :Buffers<CR>
+nnoremap <silent> <C-l> :Rg<CR>
 
 function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
