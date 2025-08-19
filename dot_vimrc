@@ -12,7 +12,6 @@ Plug 'jiz4oh/vim-lspfuzzy'
 Plug 'mattn/vim-lsp-settings'
 Plug 'mattn/vim-goimports'
 Plug 'github/copilot.vim'
-Plug 'lifepillar/vim-solarized8'
 Plug 'airblade/vim-gitgutter'
 
 call plug#end()
@@ -27,6 +26,7 @@ let g:lsp_diagnostics_float_cursor = 1
 let g:lsp_settings_filetype_ruby = ['ruby-lsp', 'rubocop-lsp-mode']
 let g:lsp_settings_filetype_go = ['gopls', 'golangci-lint-langserver']
 let g:lsp_settings_filetype_vue = ['vtsls', 'volar-server']
+let g:lsp_settings_filetype_typescript = ['typescript-language-server', 'vtsls']
 
 let g:copilot_filetypes = { 'gitcommit': v:true }
 
@@ -46,9 +46,11 @@ command! -bang -nargs=* Rg
 autocmd BufWritePre * :FixWhitespace
 
 "" set vim variables """"""""""""""""""""""""""""""""""""""""""""""""""""""
-syntax enable
+
+"" https://github.com/prabirshrestha/vim-lsp/issues/786#issuecomment-1333947331
+syntax on
+set re=0
 set background=dark
-colorscheme solarized8
 
 set nu
 set visualbell t_vb=
@@ -67,7 +69,7 @@ set smartcase
 set smartindent
 
 set laststatus=2
-set clipboard=unnamedplus
+set clipboard=unnamed
 set omnifunc=lsp#complete
 
 set statusline=%F%m\ %=%l:%v\ %{&ff}
@@ -82,7 +84,7 @@ nnoremap <Leader>gh :!gh browse $(git ls-files --full-name %)<CR><CR>
 nnoremap <silent> <C-p> :Files<CR>
 nnoremap <silent> <C-h> :History<CR>
 nnoremap <silent> <C-k> :Buffers<CR>
-nnoremap <silent> <C-l> :Rg<CR>
+nnoremap <silent> <C-g> :Rg<CR>
 
 function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete

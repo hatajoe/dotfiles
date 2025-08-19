@@ -61,7 +61,7 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-if [ "$color_prompt" = yes ]; then
+if [ "$force_color_prompt" = yes ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
@@ -123,6 +123,10 @@ fi
 
 if [ -d /etc/bash_completion.d ]; then
     for f in /etc/bash_completion.d/*; do . $f; done
+fi
+
+if [ -d /opt/homebrew/etc/bash_completion.d/ ]; then
+    for f in /opt/homebrew/etc/bash_completion.d/*; do . $f; done
     __git_complete g __git_main
 fi
 
@@ -135,21 +139,10 @@ if command -v fzf > /dev/null 2>&1 && command -v ghq > /dev/null 2>&1; then
             cd "$(ghq root)/$repo"
             tmux split-window -h -c "#{pane_current_path}"
             tmux split-window -v -c "#{pane_current_path}"
-            tmux select-layout 'fd06,270x71,0,0{155x71,0,0[155x50,0,0,1,155x20,0,51,6],114x71,156,0,3}'
+            tmux select-layout 'e992,239x55,0,0{139x55,0,0[139x37,0,0,10,139x17,0,38,11],99x55,140,0,12}'
         fi
     }
     bind '"\C-]": "\C-ex\C-u __gcd__\C-m\C-y\C-b\C-d"'
-fi
-
-if command -v saml2aws > /dev/null 2>&1 && command -v aws > /dev/null 2>&1; then
-    awslogin() {
-        # SAML2AWS_IDP_PROVIDER=Browser saml2aws login -a "$1" && export AWS_PROFILE="$1"
-        saml2aws login -a "$1" && export AWS_PROFILE="$1"
-    }
-
-    awsconsole() {
-        awslogin "$1" && export AWS_PROFILE="$1" && saml2aws console -a "$1"
-    }
 fi
 
 awsso() {
