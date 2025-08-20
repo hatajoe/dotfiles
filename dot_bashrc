@@ -97,6 +97,14 @@ alias ll='ls -l'
 #alias la='ls -A'
 alias l='ls -CF'
 
+if command -v brew >/dev/null 2>&1; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+if command -v mise >/dev/null 2>&1; then
+    eval "$(mise activate bash)"
+fi
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -132,29 +140,4 @@ fi
 
 bind 'set bell-style none'
 
-if command -v fzf > /dev/null 2>&1 && command -v ghq > /dev/null 2>&1; then
-    __gcd__() {
-        repo=`ghq list | fzf --preview "bat --style=header,grid --line-range :80 $(ghq root)/{}/README.*"`
-        if [ -n "$repo" ]; then
-            cd "$(ghq root)/$repo"
-            tmux split-window -h -c "#{pane_current_path}"
-            tmux split-window -v -c "#{pane_current_path}"
-            tmux select-layout 'e992,239x55,0,0{139x55,0,0[139x37,0,0,10,139x17,0,38,11],99x55,140,0,12}'
-        fi
-    }
-    bind '"\C-]": "\C-ex\C-u __gcd__\C-m\C-y\C-b\C-d"'
-fi
-
-awsso() {
-    PROFILE=$(cat ~/.aws/config | grep profile | awk '{print $2}' | tr -d '\]' | fzf)
-    ACCOUNT=$(cat ~/.aws/config | grep -A 4 "\[profile ${PROFILE}\]" | grep "sso_account_id" | awk '{print $3}')
-    REGION=$(cat ~/.aws/config | grep -A 4 "\[profile ${PROFILE}\]" | grep "region" | awk '{print $3}')
-    aws sso login --profile "${PROFILE}"
-    export AWS_PROFILE="${PROFILE}"
-    if [ -n "${REGION}" ]; then
-        export AWS_REGION="${REGION}"
-    fi
-    export AWS_ACCOUNT="${ACCOUNT}"
-    export ENVIRONMENT=$(echo ${AWS_PROFILE#*-} | sed 's/-.*$//')
-    aws sts get-caller-identity
-}
+echo ".bashrc loaded"

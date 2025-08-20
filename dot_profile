@@ -8,13 +8,7 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-if command -v brew >/dev/null 2>&1; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
-
-if command -v mise >/dev/null 2>&1; then
-    eval "$(mise activate bash)"
-fi
+export BASH_SILENCE_DEPRECATION_WARNING=1
 
 if [ -d "/usr/local/go" ] ; then
     PATH="/usr/local/go/bin:$PATH"
@@ -36,28 +30,6 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-parse_git_branch() {
-    git rev-parse --git-dir &> /dev/null
-    git_status="$?"
-    if [ $git_status -eq 0 ]; then
-        git_dir=$(git rev-parse --git-dir 2>/dev/null)
-        if [ "$git_dir" = ".git" ]; then
-            echo $(basename $PWD)
-        else
-            git_root=$(dirname "$git_dir")
-            git_root_basename=$(basename $git_root)
-            relative_path=${PWD##$git_root/}
-            echo -n "$git_root_basename/$relative_path"
-        fi
-    else
-        echo -n "\w"
-    fi
-}
-
-GIT_PS1_SHOWDIRTYSTATE=true
-GIT_PS1_SHOWUNTRACKEDFILES=true
-PROMPT_COMMAND='__git_ps1 "\e[1;36m\D{%H:%M:%S}\e[0;90m $(parse_git_branch)" "\e[0m\n% "'
-
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
@@ -68,19 +40,11 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-if command -v socat > /dev/null 2>&1 && command -v npiperelay.exe > /dev/null 2>&1; then
-    export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
-    (
-        set -eu
-        piperelay=(setsid socat "UNIX-LISTEN:$SSH_AUTH_SOCK,fork" "EXEC:npiperelay.exe -ei -s //./pipe/openssh-ssh-agent,nofork")
-        if ! pgrep "-fxU$UID" "${piperelay[*]:1}" >/dev/null; then
-            rm -f "$SSH_AUTH_SOCK"
-            ("${piperelay[@]}" &) >/dev/null
-        fi
-    )
-fi
+# Created by `pipx` on 2025-08-05 02:08:50
+export PATH="$PATH:/Users/hatajoe/.local/bin"
 
 if [ -f "$HOME/.env" ]; then
     . "$HOME/.env"
 fi
 
+echo ".profile loaded"
