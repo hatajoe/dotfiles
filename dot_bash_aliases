@@ -1,6 +1,4 @@
-alias v=vim
-alias g=git
-alias tf=terraform
+echo "load .bash_aliases"
 
 if command -v fzf > /dev/null 2>&1 && command -v ghq > /dev/null 2>&1; then
     __gcd__() {
@@ -55,4 +53,7 @@ if command -v git > /dev/null 2>&1; then
     PROMPT_COMMAND='__git_ps1 "\e[1;36m\D{%H:%M:%S}\e[0;90m $(__parse_git_branch__)" "\e[0m\n% "'
 fi
 
-echo ".bash_aliases loaded"
+alias v=vim
+alias g=git
+alias tf=terraform
+
