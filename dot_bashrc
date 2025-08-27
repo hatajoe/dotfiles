@@ -107,6 +107,10 @@ if command -v mise >/dev/null 2>&1; then
     eval "$(mise activate bash)"
 fi
 
+if command -v fzf >/dev/null 2>&1; then
+    eval "$(fzf --bash)"
+fi
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -138,10 +142,6 @@ fi
 if [ -d /opt/homebrew/etc/bash_completion.d/ ]; then
     for f in /opt/homebrew/etc/bash_completion.d/*; do . $f; done
     __git_complete g __git_main
-fi
-
-if [ -f ~/.fzf.bash ]; then
-    . ~/.fzf.bash
 fi
 
 bind 'set bell-style none'
