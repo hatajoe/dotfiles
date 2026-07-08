@@ -9,9 +9,6 @@ if command -v fzf > /dev/null 2>&1 && command -v ghq > /dev/null 2>&1; then
         repo=`ghq list | fzf --preview "batcat --style=header,grid --line-range :80 $(ghq root)/{}/README.*"`
         if [ -n "$repo" ]; then
             cd "$(ghq root)/$repo"
-            tmux split-window -h -c "#{pane_current_path}"
-            tmux split-window -v -c "#{pane_current_path}"
-            tmux select-layout 'e992,239x55,0,0{139x55,0,0[139x37,0,0,10,139x17,0,38,11],99x55,140,0,12}'
         fi
     }
     bind '"\C-]": "\C-ex\C-u __gcd__\C-m\C-y\C-b\C-d"'

@@ -1,5 +1,9 @@
 echo "load .bash_profile"
 
+# Fix missing locale warnings inside multiplexers like herdr
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
 if [ -d "/usr/local/go" ] ; then
