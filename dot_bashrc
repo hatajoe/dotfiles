@@ -2,8 +2,6 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-echo "load .bashrc"
-
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -108,7 +106,11 @@ if command -v mise >/dev/null 2>&1; then
 fi
 
 if command -v fzf >/dev/null 2>&1; then
-    eval "$(fzf --bash)"
+    if fzf --bash >/dev/null 2>&1; then
+        eval "$(fzf --bash)"
+    elif [ -f /usr/share/doc/fzf/examples/key-bindings.bash ]; then
+        source /usr/share/doc/fzf/examples/key-bindings.bash
+    fi
 fi
 
 # Alias definitions.
